@@ -1,0 +1,23 @@
+[
+    {
+        "settings": [ "master" ],
+        "appPort": "8666",
+		"specs": {
+			"welcome": {
+				"type" : "HTMLFrameMojit",
+				"config": {
+					"deploy" : true,
+					"child": {
+						"type": "welcome"
+					}
+				}
+			}
+		}
+    },
+    {
+        "settings": [ "environment:development" ],
+        "staticHandling": {
+            "forceUpdate": true
+        }
+    }
+]

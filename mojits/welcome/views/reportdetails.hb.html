@@ -1,0 +1,176 @@
+<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.2.0/pure-min.css">
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawDailyChart);
+      function drawMonthlyChart() {
+        var chartD = google.visualization.arrayToDataTable([
+          ['Monthly', 'Sentiment', 'Warning Threshold'],
+            ['2001', 0, -5],
+            ['2002', 0, -5],
+            ['2003', 0, -5],
+            ['2004', 10, -5],
+            ['2005', 16, -5],
+            ['2006', 10, -5],
+            ['2007', 10, -5],
+            ['2008', 10, -5],
+            ['2009', 11, -5],
+            ['2010', 10, -5],
+            ['2011', 10, -5],
+            ['2012', 13, -5],
+            ['2013', 14, -5],
+            ['2014', 10, -5]
+        ]);
+
+        var options = {
+          title: 'Shrink Watch',
+          hAxis: {title: 'Monthly',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(chartD, options);
+      }
+
+      function drawWeeklyChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Weekly', 'Sentiment', 'Warning Threshold'],
+            ['07-07-2013', -3.0, -5],
+            ['08-07-2013', -1.5, -5],
+            ['09-07-2013', -0.75, -5],
+            ['10-07-2013', -0.375, -5],
+            ['11-07-2013', -16.375, -5],
+            ['12-07-2013', -9.1875, -5],
+            ['13-07-2013', -4.59375, -5]
+
+        ]);
+
+        var options = {
+          title: 'Shrink Weekly Watch',
+          hAxis: {title: 'Trends by day',  titleTextStyle: {color: 'red'}}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+      function drawDailyChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Hours', 'Sentiment Score', 'Warning Threshold'],
+            ['9:30', 0.0, -5],
+            ['11:30', -3.0, -5],
+            ['12:10', -2.5, -5],
+            ['14:45', -2.25, -5],
+            ['14:51', -8.25, -5],
+            ['14:53', -8.125, -5],
+            ['17:45', -5.0625, -5],
+            ['19:12', -2.53125, -5],
+            ['21:45', -2.265625, -5],
+            ['22:03', -5.265625, -5]
+        ]);
+
+        var options = {
+          title: 'Shrink Daily Watch',
+          hAxis: {title: 'Trends by the hour',  titleTextStyle: {color: 'blue'}}
+        };
+
+        var chart = new google.visualization.AreaChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+
+      function showData(duration){
+        if(duration == 'w'){
+            drawWeeklyChart();
+            drawWeeklyAverage()
+        }else if (duration == 'd'){
+            drawDailyChart();
+            drawDailyAverage();
+        }else {
+            drawYearlyChart();
+        }
+      }
+
+      google.load('visualization', '1', {packages:['gauge']});
+      google.setOnLoadCallback(drawDailyAverage);
+      function drawDailyAverage() {
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Daily', -5]
+        ]);
+
+        var options = {
+          title: 'Shrink Daily Analysis',
+          width: 400, height: 120,
+          redFrom: 30, redTo: 45,
+          yellowFrom:1, yellowTo: 30,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('gauge_div'));
+        chart.draw(data, options);
+      }
+
+      function drawWeeklyAverage() {
+        var data = google.visualization.arrayToDataTable([
+          ['Label', 'Value'],
+          ['Daily', (100 + (-30))%100]
+        ]);
+
+        var options = {
+          title: 'Shrink Daily Analysis',
+          width: 400, height: 120,
+          redFrom: 80, redTo: 100,
+          yellowFrom:65, yellowTo: 85,
+          greenFrom:1, greenTo:65,
+          minorTicks: 5
+        };
+
+        var chart = new google.visualization.Gauge(document.getElementById('gauge_div'));
+        chart.draw(data, options);
+      }
+
+
+    </script>
+<table width=100% height=100%>
+<tr>
+  <td>
+    <div id="{{mojit_view_id}}">
+    <H1>Shrink on the watch</H1>
+    </div>
+  </td>
+</tr>
+<tr>
+  <td>
+<div id="{{mojit_view_id}}">
+  <label>Reporting Period :</label>
+    <select name="duration" onChange="javaScript:showData(this.value);">
+      <option value="d">Daily</option>
+      <option value="w">Weekly</option>
+      <option value="m">Monthly</option>
+    </select>
+    <table>
+        <tr>
+            <td>
+                <div id="chart_div" style="width: 900px; height: 500px;"></div>
+            </td>
+            <td>
+                <label>Average Daily Sentiment</label>
+                <div id="gauge_div" style="width: 400px; height: 500px;"></div>
+            </td>
+        </tr>
+    </table>
+</div>
+  </td>
+</tr>
+<tr>
+  <td align=centre>
+    
+    <div id="{{mojit_view_id}}">
+        <dl>
+            <dd id="dd_data">
+                <p> <font size=3>All rights Reserved. &copy; Shrinks on the Watch</font></p> 
+            </dd>
+        </dl>
+    </div>
+  </td>
+</tr>
+</table>
